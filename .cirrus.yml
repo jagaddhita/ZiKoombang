@@ -1,0 +1,23 @@
+env:
+    CIRRUS_CLONE_DEPTH: 1
+    CIRRUS_WORKING_DIR: "/tmp/ci"
+
+    rclone_config: "ENCRYPTED[a5ac92dce27d19c52e80b0801ef9a41659241ad6ba31ed88e112fccb8f25d94aed7f22f4bb2efa0a033349d6854dd8e0]"
+
+task:
+    name: ZiKoombang
+    use_compute_credits: $CIRRUS_USER_COLLABORATOR == 'true'
+    timeout_in: 120m
+    container:
+      image: cimg/android:30.0
+      cpu: 8
+      memory: 32G
+    download_ccache_background_script:
+      - ./download_ccache
+    sync_script:      - ./sync
+    monitor_background_script:
+      - ./monitor
+    build_script:
+      - ./build
+    upload_ccache_script:
+      - ./upload_ccache
